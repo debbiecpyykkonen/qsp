@@ -1,19 +1,10 @@
 
 SHEETS
-{"qInfo":{"qId":"LSJdfkd","qType":"sheet"},"qMeta":{"_resourcetype":"app.object","_objecttype":"sheet","id":"LSJdfkd","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.644Z","modifiedDate":"2026-02-06T22:25:36.644Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"Data Validation","description":""},"qData":[]}
-{"qInfo":{"qId":"PJRRV","qType":"sheet"},"qMeta":{"_resourcetype":"app.object","_objecttype":"sheet","id":"PJRRV","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.643Z","modifiedDate":"2026-02-06T22:25:36.643Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"External Capacity By Application (1)","description":""},"qData":[]}
 {"qInfo":{"qId":"eYFJ","qType":"sheet"},"qMeta":{"_resourcetype":"app.object","_objecttype":"sheet","id":"eYFJ","approved":false,"published":true,"publishTime":"2026-02-10T16:14:29.141Z","owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.641Z","modifiedDate":"2026-02-10T16:14:28.997Z","encrypted":true,"privileges":["read","publish","change_owner"],"title":"Data Files","description":""},"qData":[]}
-{"qInfo":{"qId":"fPrF","qType":"sheet"},"qMeta":{"_resourcetype":"app.object","_objecttype":"sheet","id":"fPrF","approved":false,"published":true,"publishTime":"2026-02-09T16:25:11.751Z","owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.640Z","modifiedDate":"2026-02-09T16:25:14.300Z","encrypted":true,"privileges":["read","publish","change_owner"],"title":"External Capacity By Application","description":""},"qData":[]}
+{"qInfo":{"qId":"fPrF","qType":"sheet"},"qMeta":{"_resourcetype":"app.object","_objecttype":"sheet","id":"fPrF","approved":false,"published":true,"publishTime":"2026-02-12T22:36:18.376Z","owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.640Z","modifiedDate":"2026-02-12T22:36:22.664Z","encrypted":true,"privileges":["read","publish","change_owner"],"title":"External Capacity By Application","description":""},"qData":[]}
 {"qInfo":{"qId":"ydrJJ","qType":"sheet"},"qMeta":{"_resourcetype":"app.object","_objecttype":"sheet","id":"ydrJJ","approved":false,"published":true,"publishTime":"2026-02-05T17:28:54.148Z","owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.638Z","modifiedDate":"2026-02-06T22:25:36.638Z","encrypted":true,"privileges":["read","publish","change_owner"],"title":"ABOUT","description":""},"qData":[]}
 
 OBJECTS ON SHEETS
-{"name":"HPwag","type":"sn-table","col":0,"row":0,"colspan":18,"rowspan":11,"bounds":{"y":0,"x":0,"width":75,"height":91.66666666666666}}
-{"name":"XjJCGWc","type":"filterpane","col":0,"row":2,"colspan":31,"rowspan":1,"bounds":{"y":11.11111111111111,"x":0,"width":86.11111111111111,"height":5.555555555555555}}
-{"name":"JWDgffj","type":"qlik-variable-input","col":0,"row":0,"colspan":6,"rowspan":2,"bounds":{"y":0,"x":0,"width":16.666666666666664,"height":11.11111111111111}}
-{"name":"ZRbTRW","type":"action-button","col":31,"row":2,"colspan":5,"rowspan":1,"bounds":{"y":11.11111111111111,"x":86.11111111111111,"width":13.88888888888889,"height":5.555555555555555}}
-{"name":"BRNeXV","type":"sn-tabbed-container","col":0,"row":3,"colspan":36,"rowspan":15,"bounds":{"y":16.666666666666664,"x":0,"width":100,"height":83.33333333333334}}
-{"name":"BkU","type":"qlik-variable-input","col":6,"row":0,"colspan":6,"rowspan":2,"bounds":{"y":0,"x":16.666666666666664,"width":16.666666666666664,"height":11.11111111111111}}
-{"name":"KaLpGjW","type":"sn-nav-menu","col":12,"row":0,"colspan":24,"rowspan":2,"bounds":{"y":0,"x":33.33333333333333,"width":66.66666666666666,"height":11.11111111111111}}
 {"name":"xEQcvMJ","type":"sn-table","col":0,"row":2,"colspan":24,"rowspan":10,"bounds":{"y":16.666666666666664,"x":0,"width":100,"height":83.33333333333334}}
 {"name":"JTBJf","type":"filterpane","col":0,"row":1,"colspan":24,"rowspan":1,"bounds":{"y":8.333333333333332,"x":0,"width":100,"height":8.333333333333332}}
 {"name":"JmKbejE","type":"sn-text","col":0,"row":0,"colspan":24,"rowspan":1,"bounds":{"y":0,"x":0,"width":100,"height":8.333333333333332}}
@@ -30,7 +21,7 @@ OBJECTS ON SHEETS
 DIMENSIONS
 {"qInfo":{"qId":"CzcEZzg","qType":"dimension"},"qMeta":{"_resourcetype":"app.object","_objecttype":"dimension","id":"CzcEZzg","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.422Z","modifiedDate":"2026-02-06T22:25:36.422Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"App Space","description":"","tags":[]},"qData":[]}
 {"qInfo":{"qId":"PpPmGC","qType":"dimension"},"qMeta":{"_resourcetype":"app.object","_objecttype":"dimension","id":"PpPmGC","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.426Z","modifiedDate":"2026-02-06T22:25:36.426Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"Space Name Data File","description":"","tags":[]},"qData":[]}
-{"qInfo":{"qId":"Vmpt","qType":"dimension"},"qMeta":{"_resourcetype":"app.object","_objecttype":"dimension","id":"Vmpt","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.427Z","modifiedDate":"2026-02-06T22:25:36.427Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"Last Reload Time","description":"","tags":[]},"qData":[]}
+{"qInfo":{"qId":"Vmpt","qType":"dimension"},"qMeta":{"_resourcetype":"app.object","_objecttype":"dimension","id":"Vmpt","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.427Z","modifiedDate":"2026-02-12T22:36:07.072Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"Last Reload Time","description":"","tags":[]},"qData":[]}
 
 MEASURES
 {"qInfo":{"qId":"PYqRxJA","qType":"measure"},"qMeta":{"_resourcetype":"app.object","_objecttype":"measure","id":"PYqRxJA","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.426Z","modifiedDate":"2026-02-06T22:25:36.426Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"='Current External ' & if(vBytesOrGB = 0,'Bytes', 'GB')","description":"","tags":[]},"qData":[]}
@@ -38,33 +29,33 @@ MEASURES
 {"qInfo":{"qId":"jgSgJW","qType":"measure"},"qMeta":{"_resourcetype":"app.object","_objecttype":"measure","id":"jgSgJW","approved":false,"published":false,"owner":"Debbie.Pyykkonen@lifetimebrands.com","ownerId":"6936f3ae9fc1ed08754017de","createdDate":"2026-02-06T22:25:36.434Z","modifiedDate":"2026-02-06T22:25:36.434Z","encrypted":true,"privileges":["read","update","delete","publish","change_owner"],"title":"='Current File ' & if(vBytesOrGB = 0,'Bytes', 'GB')","description":"","tags":[]},"qData":[]}
 
 VARIABLES
-{"qName":"sub_start","qDefinition":"46063.677175926","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"1df4dd92-27d8-4a3d-bbb8-f5d719c3d490","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"vAPICallCounter","qDefinition":"3","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"689ffe90-b52a-4baf-ab64-0f3d11c5793d","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"vRestNOPaginationConnector","qDefinition":"Developer Tools:REST_for_lineage","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"164e8b0e-7940-48a7-b84c-32f8960329a6","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"sub_start","qDefinition":"46065.931875","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"1df4dd92-27d8-4a3d-bbb8-f5d719c3d490","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"vAPICallCounter","qDefinition":"4","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"689ffe90-b52a-4baf-ab64-0f3d11c5793d","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"vRestNOPaginationConnector","qDefinition":"Monitoring:monitoring_apps_REST","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"164e8b0e-7940-48a7-b84c-32f8960329a6","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vParams","qDefinition":"limit=100","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"513ffe66-61a8-4a8a-9b8e-bb83c6cfa30b","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"vColumn2_Value","qDefinition":"testdataspace","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"f82e2608-6d46-4080-9cfe-40a1df1d5f03","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"NumRows","qDefinition":"254","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"fa6e0e2a-2218-477e-a295-69e164845378","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"sub_finish","qDefinition":"46063.68125","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"f51a18d4-411f-41fc-9cb4-59e4d782f0f7","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"load_end","qDefinition":"Feb 10 26 16:21:00","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"096043af-8d48-40ff-8cb0-9648eade1e75","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"vColumn2_Value","qDefinition":"Capacity Analyzer","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"f82e2608-6d46-4080-9cfe-40a1df1d5f03","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"NumRows","qDefinition":"258","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"fa6e0e2a-2218-477e-a295-69e164845378","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"sub_finish","qDefinition":"46065.9353125","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"f51a18d4-411f-41fc-9cb4-59e4d782f0f7","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"load_end","qDefinition":"Feb 12 26 22:26:51","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"096043af-8d48-40ff-8cb0-9648eade1e75","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"TotDF","qDefinition":"202","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"4e46286c-27b2-4b40-833e-a86b37630505","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"load_msg","qDefinition":"The loading was completed at Feb 10 26 16:21:00, Time:359 seconds.","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"75f95abe-e87c-4caf-b8d9-bc6c11242272","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"load_msg","qDefinition":"The loading was completed at Feb 12 26 22:26:51, Time:305 seconds.","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"75f95abe-e87c-4caf-b8d9-bc6c11242272","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"VCustomerName","qDefinition":"lifetimebrands","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"52f43266-e2ab-4805-b42f-58098c472069","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vMAXDFSize","qDefinition":"353147820","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"43753ba5-98cb-4da2-aa01-5b61c08115d3","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vu_tenant_fqdn","qDefinition":"6q0ll78nnlnmnxz.us.qlikcloud.com","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"fee826bc-d808-4f87-945e-8455dd2c2265","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vURL","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"fbb85a14-89dc-4626-809d-76130c096e09","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"vRestPaginationConnector","qDefinition":"Developer Tools:REST_for_lineage","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"f013978e-beca-4000-8490-91f95f101a7d","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"Load_Time","qDefinition":"Feb 10 26 16:15:02","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"eeeb3015-c908-48a4-8f73-f7a1f3384667","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"vRestPaginationConnector","qDefinition":"Monitoring:monitoring_apps_REST","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"f013978e-beca-4000-8490-91f95f101a7d","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"Load_Time","qDefinition":"Feb 12 26 22:21:47","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"eeeb3015-c908-48a4-8f73-f7a1f3384667","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"VMinDFCreated","qDefinition":"01-Aug-2023","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"6fe4f9c8-2b6f-43db-a070-d64ec8061b95","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vNextURLRows","qDefinition":"0","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"fa491ad2-65da-43bf-80e3-db8f589d8ee6","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"sub_duration","qDefinition":"352","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"70247f58-d898-4856-99c6-f77c303155c0","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"load_duration","qDefinition":"359","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"074cd599-7915-441f-9f87-e5d5d45dae3e","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"vColumn1_Value","qDefinition":"6911fa6a-0d65-43d4-9701-999cd8f0fbfa","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"d707e989-1f81-4a8b-8279-6dad95b05405","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"i","qDefinition":"254","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"91b8ed26-5779-4626-82c0-7f1afd582972","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"Msg","qDefinition":"Loading Time  Feb 10 26 16:15:02","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"788febbd-a64b-46e9-b7d2-ce17639b27ae","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"sub_duration","qDefinition":"297","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"70247f58-d898-4856-99c6-f77c303155c0","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"load_duration","qDefinition":"305","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"074cd599-7915-441f-9f87-e5d5d45dae3e","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"vColumn1_Value","qDefinition":"956e7f16-7f2d-452c-a830-5a56ae5f4780","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"d707e989-1f81-4a8b-8279-6dad95b05405","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"i","qDefinition":"258","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"91b8ed26-5779-4626-82c0-7f1afd582972","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"Msg","qDefinition":"Loading Time  Feb 12 26 22:21:47","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"788febbd-a64b-46e9-b7d2-ce17639b27ae","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vMINDFSize","qDefinition":"1477","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"54b19d1b-58f4-42cf-b8c3-68fe93822d53","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vReloadsQVDFileName","qDefinition":"lib:\/\/:DataFiles\/ReloadData.qvd","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"6b2a67e3-19fe-42a9-b712-65faa4e5ea9e","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"VMaxDFCreated","qDefinition":"03-Feb-2026","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"949bd8a7-0356-46da-8c8a-f35b601e56f8","qType":"variable"},"qData":[],"qIsScriptCreated":true}
-{"qName":"vAVGDFSize","qDefinition":"9835543.5","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"69de85c1-5cae-40f2-851e-7bedacb4b85e","qType":"variable"},"qData":[],"qIsScriptCreated":true}
+{"qName":"vAVGDFSize","qDefinition":"9837732.1","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"69de85c1-5cae-40f2-851e-7bedacb4b85e","qType":"variable"},"qData":[],"qIsScriptCreated":true}
 {"qName":"vBytesOrGB","qDefinition":"1","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"03addcde-7b95-4226-ba9b-b344ef4181b0","qType":"variable"},"qData":[]}
 {"qName":"modifiedDate","qDefinition":"2026-01-14 18:20:15.456","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"abe1cee9-6291-4544-b85a-697d15704222","qType":"variable"},"qData":[]}
 {"qName":"QVDFile","qDefinition":"lib:\/\/DataFiles\/ReloadData.qvd","qMeta":{"privileges":["read","update","delete"]},"qInfo":{"qId":"51f7fd9f-da10-4f32-91ac-ffe73db317ed","qType":"variable"},"qData":[]}
@@ -82,84 +73,84 @@ FIELDS
 {"qIsHidden":true,"qIsSystem":true,"qName":"$Fields","qCardinal":5,"qTags":["$hidden","$system","$numeric","$integer"],"qSrcTables":[]}
 {"qIsHidden":true,"qIsSystem":true,"qName":"$FieldNo","qCardinal":30,"qTags":["$hidden","$system","$numeric","$integer"],"qSrcTables":[]}
 {"qIsHidden":true,"qIsSystem":true,"qName":"$Info","qCardinal":1,"qTags":["$hidden","$system","$ascii","$text"],"qSrcTables":[]}
-{"qName":"SpaceID","qCardinal":53,"qTags":["$key","$ascii","$text"],"qSrcTables":["Spaces","Applications","DataFiles"]}
+{"qName":"SpaceID","qCardinal":54,"qTags":["$key","$ascii","$text"],"qSrcTables":["Spaces","Applications","DataFiles"]}
 {"qName":"SpaceType","qCardinal":3,"qTags":["$ascii","$text"],"qSrcTables":["Spaces"]}
 {"qName":"SpaceOwnerID","qCardinal":8,"qTags":["$ascii","$text"],"qSrcTables":["Spaces"]}
-{"qName":"SpaceName","qCardinal":52,"qTags":["$ascii","$text"],"qSrcTables":["Spaces"]}
+{"qName":"SpaceName","qCardinal":53,"qTags":["$ascii","$text"],"qSrcTables":["Spaces"]}
 {"qName":"SpaceDescription","qCardinal":15,"qTags":["$ascii","$text"],"qSrcTables":["Spaces"]}
-{"qName":"SpaceCreatedTime","qCardinal":52,"qTags":["$numeric","$timestamp"],"qSrcTables":["Spaces"]}
+{"qName":"SpaceCreatedTime","qCardinal":53,"qTags":["$numeric","$timestamp"],"qSrcTables":["Spaces"]}
 {"qName":"SpaceCreatedBy","qCardinal":8,"qTags":["$ascii","$text"],"qSrcTables":["Spaces"]}
 {"qName":"isDirectQueryMode","qCardinal":2,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"_resourcetype","qCardinal":1,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"originAppId","qCardinal":51,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"usage","qCardinal":1,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
-{"qName":"appId","qCardinal":254,"qTags":["$key","$ascii","$text"],"qSrcTables":["Applications","ReloadData"]}
+{"qName":"appId","qCardinal":258,"qTags":["$key","$ascii","$text"],"qSrcTables":["Applications","ReloadData"]}
 {"qName":"reloadOnly","qCardinal":0,"qTags":[],"qSrcTables":["Applications"]}
 {"qName":"type","qCardinal":0,"qTags":[],"qSrcTables":["Applications"]}
-{"qName":"App Name","qCardinal":214,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
+{"qName":"App Name","qCardinal":218,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"App Desc","qCardinal":29,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
-{"qName":"Days Since Last Reload","qCardinal":144,"qTags":["$numeric","$integer"],"qSrcTables":["Applications"]}
-{"qName":"App Last Reload","qCardinal":242,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
-{"qName":"App Created","qCardinal":254,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
-{"qName":"App Modified","qCardinal":254,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
+{"qName":"Days Since Last Reload","qCardinal":145,"qTags":["$numeric","$integer"],"qSrcTables":["Applications"]}
+{"qName":"App Last Reload","qCardinal":245,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
+{"qName":"App Created","qCardinal":258,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
+{"qName":"App Modified","qCardinal":258,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
 {"qName":"Origin App Name","qCardinal":43,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"App OwnerId","qCardinal":14,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"App Owner Email","qCardinal":14,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
 {"qName":"App Owner Name","qCardinal":14,"qTags":["$ascii","$text"],"qSrcTables":["Applications"]}
-{"qName":"App Plubished Time","qCardinal":57,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
+{"qName":"App Plubished Time","qCardinal":58,"qTags":["$numeric","$timestamp"],"qSrcTables":["Applications"]}
 {"qName":"App Type","qCardinal":0,"qTags":[],"qSrcTables":["Applications"]}
 {"qName":"DataFileID","qCardinal":202,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFolder","qCardinal":1,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFileName","qCardinal":166,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
 {"qName":"DataBaseName","qCardinal":166,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFileExt","qCardinal":4,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
-{"qName":"DataFileSize","qCardinal":193,"qTags":["$numeric","$integer"],"qSrcTables":["DataFiles"]}
+{"qName":"DataFileSize","qCardinal":194,"qTags":["$numeric","$integer"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFileCreated","qCardinal":202,"qTags":["$numeric","$timestamp"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFileModified","qCardinal":202,"qTags":["$numeric","$timestamp"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFileOwner","qCardinal":8,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
 {"qName":"DataFileQRI","qCardinal":202,"qTags":["$ascii","$text"],"qSrcTables":["DataFiles"]}
-{"qName":"reloadId","qCardinal":1977,"qTags":["$ascii","$text"],"qSrcTables":["ReloadData"]}
+{"qName":"reloadId","qCardinal":2170,"qTags":["$ascii","$text"],"qSrcTables":["ReloadData"]}
 {"qName":"success","qCardinal":2,"qTags":["$ascii","$text"],"qSrcTables":["ReloadData"]}
-{"qName":"duration_u0","qCardinal":1941,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"endTime","qCardinal":1979,"qTags":["$numeric","$timestamp"],"qSrcTables":["ReloadData"]}
-{"qName":"loadDataFilesBytes","qCardinal":199,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"loadFilesBytes","qCardinal":71,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"loadExternalBytes","qCardinal":1335,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"storeFilesBytes","qCardinal":57,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"storeDataFilesBytes","qCardinal":118,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"duration_u0","qCardinal":2130,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"endTime","qCardinal":2172,"qTags":["$numeric","$timestamp"],"qSrcTables":["ReloadData"]}
+{"qName":"loadDataFilesBytes","qCardinal":216,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"loadFilesBytes","qCardinal":75,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"loadExternalBytes","qCardinal":1493,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"storeFilesBytes","qCardinal":60,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"storeDataFilesBytes","qCardinal":135,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
 {"qName":"isPartialReload","qCardinal":2,"qTags":["$ascii","$text"],"qSrcTables":["ReloadData"]}
-{"qName":"MonthKeyTemp","qCardinal":331,"qTags":["$key","$ascii","$text"],"qSrcTables":["ReloadData","MonthlySummary_Ranked"]}
-{"qName":"endDate","qCardinal":1979,"qTags":["$numeric","$timestamp"],"qSrcTables":["ReloadData"]}
-{"qName":"TotalBytes","qCardinal":1382,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"TotalBytes_GB","qCardinal":1382,"qTags":["$numeric"],"qSrcTables":["ReloadData"]}
-{"qName":"loadExternal_GB","qCardinal":1335,"qTags":["$numeric"],"qSrcTables":["ReloadData"]}
-{"qName":"loadFilesBytes_GB","qCardinal":71,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
-{"qName":"Last Reload Time","qCardinal":325,"qTags":["$numeric","$timestamp"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"Last Reload Date","qCardinal":174,"qTags":["$numeric","$timestamp","$integer","$date"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MonthKeyTemp","qCardinal":334,"qTags":["$key","$ascii","$text"],"qSrcTables":["ReloadData","MonthlySummary_Ranked"]}
+{"qName":"endDate","qCardinal":2172,"qTags":["$numeric","$timestamp"],"qSrcTables":["ReloadData"]}
+{"qName":"TotalBytes","qCardinal":1540,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"TotalBytes_GB","qCardinal":1540,"qTags":["$numeric"],"qSrcTables":["ReloadData"]}
+{"qName":"loadExternal_GB","qCardinal":1493,"qTags":["$numeric"],"qSrcTables":["ReloadData"]}
+{"qName":"loadFilesBytes_GB","qCardinal":75,"qTags":["$numeric","$integer"],"qSrcTables":["ReloadData"]}
+{"qName":"Last Reload Time","qCardinal":328,"qTags":["$numeric","$timestamp"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"Last Reload Date","qCardinal":175,"qTags":["$numeric","$timestamp","$integer","$date"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MonthEnd","qCardinal":23,"qTags":["$numeric","$timestamp"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxBytes","qCardinal":264,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxGB","qCardinal":264,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxBytes","qCardinal":266,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxGB","qCardinal":266,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MaxFileBytes","qCardinal":26,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MaxFileBytes_GB","qCardinal":26,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxTotalBytes","qCardinal":282,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxTotalBytes_GB","qCardinal":282,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"Last Reload Bytes","qCardinal":263,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"Last Reload GB","qCardinal":263,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxTotalBytes","qCardinal":284,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxTotalBytes_GB","qCardinal":284,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"Last Reload Bytes","qCardinal":267,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"Last Reload GB","qCardinal":267,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"Last File Bytes","qCardinal":26,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"Last File GB","qCardinal":26,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"Last Total Bytes","qCardinal":281,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"Last Total GB","qCardinal":281,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"PriorMonthReloadBytes","qCardinal":185,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"PriorReloadDate","qCardinal":148,"qTags":["$numeric","$timestamp","$integer","$date"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"Last Total Bytes","qCardinal":285,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"Last Total GB","qCardinal":285,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"PriorMonthReloadBytes","qCardinal":188,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"PriorReloadDate","qCardinal":149,"qTags":["$numeric","$timestamp","$integer","$date"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"PriorMonthFileBytes","qCardinal":22,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"PriorMonthFileBytes_GB","qCardinal":22,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"PriorMonthTotalBytes","qCardinal":203,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"PriorMonthTotalBytes_GB","qCardinal":203,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"PriorMonthTotalBytes","qCardinal":206,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"PriorMonthTotalBytes_GB","qCardinal":206,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MaxConsumptionDesc","qCardinal":2,"qTags":["$ascii","$text"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxConsumption","qCardinal":232,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxConsumption_GB","qCardinal":232,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxConsumption","qCardinal":234,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxConsumption_GB","qCardinal":234,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MaxConsumptionFiles","qCardinal":26,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MaxConsumptionFiles_GB","qCardinal":26,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxConsumptionTotal","qCardinal":282,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
-{"qName":"MaxConsumptionTotal_GB","qCardinal":241,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxConsumptionTotal","qCardinal":284,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
+{"qName":"MaxConsumptionTotal_GB","qCardinal":243,"qTags":["$numeric"],"qSrcTables":["MonthlySummary_Ranked"]}
 {"qName":"MonthRank","qCardinal":10,"qTags":["$numeric","$integer"],"qSrcTables":["MonthlySummary_Ranked"]}
