@@ -1,0 +1,938 @@
+///$tab Main
+SET ThousandSep=',';
+SET DecimalSep='.';
+SET MoneyThousandSep=',';
+SET MoneyDecimalSep='.';
+SET MoneyFormat='$ ###0.00;-$ ###0.00';
+SET TimeFormat='h:mm:ss TT';
+SET DateFormat='M/D/YYYY';
+SET TimestampFormat='MMM DD YY hh:mm:ss';
+SET FirstWeekDay=6;
+SET BrokenWeeks=1;
+SET ReferenceDay=0;
+SET FirstMonthOfYear=1;
+SET CollationLocale='en-US';
+SET CreateSearchIndexOnReload=1;
+SET MonthNames='Jan;Feb;Mar;Apr;May;Jun;Jul;Aug;Sep;Oct;Nov;Dec';
+SET LongMonthNames='January;February;March;April;May;June;July;August;September;October;November;December';
+SET DayNames='Mon;Tue;Wed;Thu;Fri;Sat;Sun';
+SET LongDayNames='Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday';
+SET NumericalAbbreviation='3:k;6:M;9:G;12:T;15:P;18:E;21:Z;24:Y;-3:m;-6:μ;-9:n;-12:p;-15:f;-18:a;-21:z;-24:y';
+
+///$tab ***CONFIGURATION***
+let vColumn1_Value = ;
+let vColumn2_Value = ;
+
+LET vReloadsQVDFileName 		= 'lib://:DataFiles/ReloadData.qvd'; //for reloads incremental load
+LET vu_tenant_fqdn 				= GetSysAttr('tenantUrl');
+LET VCustomerName				= textbetween(GetSysAttr('tenantUrlAlias'),'','.');
+Trace $(VCustomerName);
+
+
+/***CONFIGURATION REQUIRED***/
+LET vRestPaginationConnector	= 'Developer Tools:REST_for_lineage'; 
+LET vRestNOPaginationConnector	= 'Developer Tools:REST_for_lineage';//future use when consolidated with Qlik Cloud Site INventory 
+
+
+
+
+
+///$tab sub exe sub
+Sub Exe_sub(sub_routine)
+    Trace The routine $(sub_routine) just started;
+    Let sub_start = Num(Now(1));
+    Call $(sub_routine)
+    Let sub_finish = Num(Now(1));
+    Let sub_duration = Num(Round((sub_finish-sub_start)*86400),'#,##0');
+    Trace The rutine $(sub_routine) completed, Time:$(sub_duration) seconds.;
+End Sub
+
+
+
+///$tab Sub datafiles TBD
+sub datafiles
+
+//api/v1/data-files
+end Sub
+
+///$tab sub spaces
+SUB get_spaces
+TRACE ***Getting Spaces***;
+  SET vParams = 'limit=100';
+  
+  [Spaces]:
+  LOAD * INLINE [SpaceID];
+
+  DO
+  
+    LET vAPICallCounter = $(vAPICallCounter) + 1;
+  
+   
+    RestConnectorMasterTable:
+    SQL SELECT 
+        "__KEY_root",
+        (SELECT 
+            "id",
+            "type",
+            "ownerId",
+            "tenantId",
+            "name",
+            "description",
+            "createdAt",
+            "createdBy",
+            "updatedAt",
+            "__KEY_data",
+            "__FK_data",
+            (SELECT 
+                "__KEY_meta",
+                "__FK_meta"
+            FROM "meta" PK "__KEY_meta" FK "__FK_meta"),
+            (SELECT 
+                "__KEY_links",
+                "__FK_links"
+            FROM "links" PK "__KEY_links" FK "__FK_links")
+        FROM "data" PK "__KEY_data" FK "__FK_data"),
+        (SELECT 
+            "__KEY_links_u0",
+            "__FK_links_u0",
+            (SELECT 
+                "href" AS "href_u2",
+                "__FK_next"
+            FROM "next" FK "__FK_next")
+        FROM "links" PK "__KEY_links_u0" FK "__FK_links_u0")
+    FROM JSON (wrap on) "root" PK "__KEY_root"
+    WITH CONNECTION (  
+      URL "https://$(vu_tenant_fqdn)/api/v1/spaces?$(vParams)"
+    );
+    
+    CONCATENATE (Spaces)
+    LOAD	
+      [id] AS SpaceID,
+      Capitalize([type]) AS SpaceType,
+      [ownerId] AS SpaceOwnerID,
+      // [tenantId],
+      [name] AS SpaceName,
+      [description] AS SpaceDescription,
+      TimeStamp([createdAt]) AS SpaceCreatedTime,
+      [createdBy] AS SpaceCreatedBy
+      // [updatedAt],
+      // [__KEY_data],
+      // [__FK_data] AS [__KEY_root]
+    RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull([__FK_data]);
+
+    NextURL:
+    LOAD	
+    	[href_u2] AS NextURL
+    RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull([__FK_next]);
+
+    DROP TABLE RestConnectorMasterTable;
+
+    LET vParams = SubField(Peek('NextURL',0,'NextURL'),'?',-1);
+    LET vNextURLRows = NoOfRows('NextURL');
+
+    DROP TABLE NextURL;
+    
+  LOOP WHILE $(vNextURLRows)>0;
+
+  AllSpacesMap:
+  MAPPING LOAD DISTINCT
+      SpaceID,
+      1
+  RESIDENT Spaces;
+  
+  Map_SpaceName_SpaceID:
+  MAPPING LOAD DISTINCT
+  	  Text(SpaceName) AS SpaceName,
+      SpaceID
+  RESIDENT Spaces;
+  
+  Map_SpaceID_SpaceName:
+  MAPPING LOAD DISTINCT
+  	  SpaceID,
+  	  Text(SpaceName) AS SpaceName
+  RESIDENT Spaces;
+  
+  Map_SpaceID_OwnerID:
+  MAPPING LOAD DISTINCT
+  	  SpaceID,
+  	  SpaceOwnerID
+  RESIDENT Spaces;
+  
+  Map_SpaceID_SpaceType:
+  MAPPING LOAD DISTINCT
+  	  SpaceID,
+  	  SpaceType
+  RESIDENT Spaces;
+  
+//   drop table Spaces;
+  
+END SUB
+
+///$tab sub Users (DP added 2-6-26)
+Sub get_users
+TRACE ***Getting End Users Name and Email***;
+    Set vParams = 'limit=100';
+
+    Do
+
+      LIB Connect To '$(vRestPaginationConnector)';
+
+      RestConnectorMasterTable:
+      SQL SELECT 
+          "__KEY_root",
+          (SELECT 
+              "__KEY_links",
+              "__FK_links",
+              (SELECT 
+                  "href",
+                  "__FK_self"
+              FROM "self" FK "__FK_self"),
+              (SELECT 
+                  "href" AS "href_u0",
+                  "__FK_next"
+              FROM "next" FK "__FK_next")
+          FROM "links" PK "__KEY_links" FK "__FK_links"),
+          (SELECT 
+              "id",
+              "tenantId",
+              "created",
+              "lastUpdated",
+              "status",
+              "name",
+              "subject",
+              "email",
+              "__KEY_data",
+              "__FK_data",
+              (SELECT 
+                  "@Value",
+                  "__FK_roles"
+              FROM "roles" FK "__FK_roles" ArrayValueAlias "@Value"),
+              (SELECT 
+                  "__KEY_links_u0",
+                  "__FK_links_u0",
+                  (SELECT 
+                      "href" AS "href_u1",
+                      "__FK_self_u0"
+                  FROM "self" FK "__FK_self_u0")
+              FROM "links" PK "__KEY_links_u0" FK "__FK_links_u0")
+          FROM "data" PK "__KEY_data" FK "__FK_data")
+      FROM JSON (wrap on) "root" PK "__KEY_root"
+      WITH CONNECTION (  
+        URL "https://$(vu_tenant_fqdn)/api/v1/users?$(vParams)"
+      );
+
+
+      Users:
+      Load	
+          [id] as AppOwnerID,
+  //         [id] AS UserID,
+  //         [tenantId],
+  //         Date([created]) AS AppOwnerCreatedDate,
+  //         Date([lastUpdated]) AS AppOwnerLastUpdatedDate,
+          [status] as AppOwnerStatus,
+          [name] as AppOwnerName,
+          [subject] as AppOwnerSubject,
+          If(Len([email])>0,[email],'[None]') as AppOwnerEmail
+      Resident RestConnectorMasterTable
+      Where Not IsNull([__FK_data])
+      And Match(status,'disabled','active');
+
+      NextURL:
+      Load	
+          [href_u0] AS NextURL
+      Resident RestConnectorMasterTable
+      Where Not IsNull([__FK_next]);
+
+      Drop Table RestConnectorMasterTable;
+
+      Let vParams = SubField(Peek('NextURL',0,'NextURL'),'?',-1);
+      Let vNextURLRows = NoOfRows('NextURL');
+
+      Drop Table NextURL;
+
+    Loop While $(vNextURLRows)>0;
+
+    Concatenate(Users)
+    Load
+        '[Unknown]' 	as AppOwnerID,
+        '[Unknown]' 	as AppOwnerStatus,
+        '[Unknown]'  	as AppOwnerName,
+        '[Unknown]' 	as AppOwnerSubject,
+        '[Unknown]'	as AppOwnerEmail
+    AutoGenerate(1);
+
+//       Map_AppOwner_Exists:
+//     Mapping Load Distinct
+//         AppOwnerID,
+//         1
+//     Resident Users;
+
+    Map_UserID_AppOwnerName: // No map yet to support OEM Dash
+    Mapping Load Distinct
+        AppOwnerID,
+        AppOwnerName
+    Resident Users;
+
+//     Map_UserID_AppOwnerID:
+//     Mapping Load Distinct
+//         AppOwnerID,
+//         AppOwnerID
+//     Resident Users;
+
+//     Map_UserID_AppOwnerSubject: // No map yet to support OEM Dash
+//     Mapping Load Distinct
+//         AppOwnerID,
+//         AppOwnerSubject
+//     Resident Users;
+
+//     Map_UserID_AppOwnerSubject_OEM: // Need as mapping is done in "Apps" section for OEM field
+//     Mapping Load Distinct
+//         AppOwnerID,
+//         AppOwnerSubject
+//     Resident Users;
+
+    Map_UserID_AppOwnerEmail:
+    Mapping Load Distinct
+        AppOwnerID,
+        AppOwnerEmail
+    Resident Users;
+
+//     Call get_user_field
+
+//     Map_UserID_$(vPersonalUserField):
+//     Mapping Load Distinct
+//         AppOwnerID,
+//         $(vPersonalUserField)
+//     Resident Users;
+drop table Users;
+End Sub
+///$tab sub data-files
+Sub loadDataFiles
+/********************************************
+***  SubRutine to load Data Files MetaData
+***
+********************************************/
+    //SET vParams = 'includeAllSpaces=TRUE&limit=100';
+    SET vParams = 'includeAllSpaces=TRUE&limit=100&includeFolderStats=true&allowInternalFiles=true';
+    
+    Do
+          trace Parameter $(vParams);
+          RestConnectorMasterTable:
+          SQL SELECT 
+              "__KEY_root",
+              (SELECT 
+                  "id",
+                  "folder",
+                  "name",
+                  "baseName",
+                  "size",
+                  "createdDate",
+                  "modifiedDate",
+                  "spaceId",
+                  "ownerId",
+                  "qri",
+                  "__KEY_data",
+                  "__FK_data",
+                  (SELECT 
+                      "@Value",
+                      "__FK_actions"
+                  FROM "actions" FK "__FK_actions" ArrayValueAlias "@Value")
+              FROM "data" PK "__KEY_data" FK "__FK_data"),
+              (SELECT 
+                  "__KEY_links",
+                  "__FK_links",
+                  (SELECT 
+                      "href",
+                      "__FK_next"
+                  FROM "next" FK "__FK_next"),
+                  (SELECT 
+                      "href" AS "href_u0",
+                      "__FK_self"
+                  FROM "self" FK "__FK_self"),
+                  (SELECT 
+                      "__FK_prev"
+                  FROM "prev" FK "__FK_prev")
+              FROM "links" PK "__KEY_links" FK "__FK_links")
+          FROM JSON (wrap on) "root" PK "__KEY_root"
+          WITH CONNECTION ( URL "https://$(vu_tenant_fqdn)/api/v1/data-files?$(vParams)" );
+
+          [Temp_DF]:
+          LOAD DISTINCT	[id],
+              [folder],
+              [name],
+              [baseName],
+              subfield([baseName], '.', -1) as ext,
+              [size],
+              [spaceId],
+              [createdDate],
+              [modifiedDate],
+              [ownerId],
+              [qri]
+          RESIDENT RestConnectorMasterTable
+          WHERE NOT IsNull([__FK_data]);
+
+          [NextURL]:
+          LOAD	[href] AS NextURL,
+              [__FK_next] AS [__KEY_links]
+          RESIDENT RestConnectorMasterTable
+          WHERE NOT IsNull([href]);
+
+          LET vParams = SubField(Peek('NextURL',0,'NextURL'),'?',-1);
+          LET vNextURLRows = NoOfRows('NextURL');
+
+          Drop Table RestConnectorMasterTable;     
+          Drop Table NextURL;
+
+    Loop while $(vNextURLRows)>0;  
+
+  
+    
+    [DataFiles]:
+    LOAD
+    	[id] as DataFileID,
+        [folder] as DataFolder,
+        [name] as DataFileName,
+        [baseName] as DataBaseName,
+        upper([ext]) as DataFileExt,
+        [size] as DataFileSize,
+        [createdDate] as DataFileCreated,
+        [modifiedDate] as DataFileModified, 
+        spaceId as SpaceID,
+        applymap('Map_UserID_AppOwnerName',[ownerId],'Unknown') as DataFileOwner,
+        [qri] as DataFileQRI
+//         ,ApplyMap('Map_SpaceID_SpaceName', spaceId, 'Personal') as Space_Name
+
+    RESIDENT Temp_DF;
+    
+
+    
+    [DF_stat]:
+   	LOAD 
+        COUNT(id) as CountValue,
+        MAX(createdDate) as MaxValue,
+        MIN(createdDate) as MinValue,
+        MAX(size) as MAXFileSize,
+        AVG(size) as AVGFileSize,
+        MIN(size) as MINFileSize
+    RESIDENT Temp_DF;
+    
+    Let TotDF = TEXT(Peek('CountValue',0,'DF_stat'));
+    Let VMinDFCreated = TEXT(Date(Peek('MinValue',0,'DF_stat'),'DD-MMM-YYYY'));
+    Let VMaxDFCreated = TEXT(Date(Peek('MaxValue',0,'DF_stat'),'DD-MMM-YYYY'));
+    Let vMAXDFSize = TEXT(Peek('MAXFileSize',0,'DF_stat'));
+    Let vAVGDFSize = TEXT(Peek('AVGFileSize',0,'DF_stat'));
+    Let vMINDFSize = TEXT(Peek('MINFileSize',0,'DF_stat'));
+    
+	Trace 'Dropping Temp Tables';
+    Drop Table Temp_DF;
+    Drop Table DF_stat;
+End Sub
+///$tab sub loadApplications
+Sub loadApplications
+TRACE ***Getting End Users Name and Email***;
+Temp_App:
+LOAD
+    '' AS id,
+    '' AS name,
+    '' AS description,
+    '' AS lastReloadTime,
+    '' AS createdDate,
+    '' AS modifiedDate,
+    '' AS dynamicColor,
+    '' AS hasSectionAccess,
+    '' AS isDirectQueryMode,
+    '' AS _resourcetype,
+    '' AS originAppId,
+    '' AS owner,
+    '' AS ownerId,
+    '' AS publishTime,
+    '' AS published,
+    '' AS SpaceID,
+    '' AS thumbnail,
+    '' AS usage,
+    '' AS appId,
+    '' AS appType,
+    '' AS dataSetCount,
+    '' AS dataStoreName,
+    '' AS dataStoreType,
+    '' AS reloadOnly,
+    '' AS technicalDescription,
+    '' AS technicalName,
+    '' AS version,
+    '' AS qri,
+    '' AS secureQri,
+    '' AS sourceSystemId,
+   '' AS type,
+    '' AS appFile,
+    '' AS appMemory,
+    '' AS usedBy,
+    '' AS __KEY_data
+AUTOGENERATE 0;
+
+SET vURL = 'https://$(vu_tenant_fqdn)/api/v1/items?limit=100&resourceType=app,qvapp,script';
+
+Do
+    TRACE 'Current URL: $(vURL)';
+    
+    RestConnectorMasterTable:
+    SQL SELECT 
+        "__KEY_root",
+        (SELECT 
+            "__KEY_links",
+            (SELECT 
+                "href",
+                "__FK_next"
+            FROM "next" FK "__FK_next")
+        FROM "links" PK "__KEY_links"),
+         (SELECT 
+            "__FK_data",
+            "__KEY_data",
+            (SELECT 
+                "_resourcetype",
+                "createdDate",
+                "description",
+                "dynamicColor",
+                "hasSectionAccess",
+                "id",
+                "isDirectQueryMode",
+                "lastReloadTime",
+                "modifiedDate",
+                "name",
+                "originAppId",
+                "owner",
+                "ownerId",
+                "publishTime",
+                "published",
+                "spaceId",
+                "thumbnail",
+                "usage",
+                "appId",
+                "appType",
+                "dataSetCount",
+                "dataStoreName",
+                "dataStoreType",
+                "reloadOnly",
+                "technicalDescription",
+                "technicalName",
+                "version",
+                "qri",
+                "secureQri",
+                "sourceSystemId",
+                "type",
+                "__FK_resourceAttributes"
+            FROM "resourceAttributes" FK "__FK_resourceAttributes"),
+            (SELECT 
+                "appFile",
+                "appMemory",
+                "__FK_resourceSize"
+            FROM "resourceSize" FK "__FK_resourceSize"),
+            (SELECT 
+                "usedBy",
+                "__FK_itemViews"
+            FROM "itemViews" FK "__FK_itemViews")
+        FROM "data" PK "__KEY_data" FK "__FK_data")
+    FROM JSON (wrap on) "root" PK "__KEY_root"
+    WITH CONNECTION ( URL "$(vURL)" );
+    
+    // Get next URL - the href field should now be available
+    NextURL:
+    LOAD
+        href AS NextURL
+    RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull(__FK_next);
+    
+    LET vNextURLRows = NoOfRows('NextURL');
+    
+    IF $(vNextURLRows) > 0 THEN
+        LET vURL = Peek('NextURL', 0, 'NextURL');
+    ELSE
+        LET vURL = '';
+    END IF
+    
+    DROP TABLE NextURL;
+    
+    TRACE 'NextURL rows: $(vNextURLRows)';
+    TRACE 'Next URL: $(vURL)';
+    
+    CONCATENATE (Temp_App)
+    [Temp_App]:
+    LOAD	
+        [id],
+        [name],
+        [description],
+        [lastReloadTime],
+        [createdDate],  
+        [modifiedDate],    
+        [dynamicColor],
+        [hasSectionAccess],
+        [isDirectQueryMode],
+        [_resourcetype],
+        [originAppId],
+        [owner],
+        [ownerId],
+        [publishTime],
+        [published],
+        [spaceId] as SpaceID,
+        [thumbnail],
+        [usage],
+        [appId],
+        [appType],
+        [dataSetCount],
+        [dataStoreName],
+        [dataStoreType],
+        [reloadOnly],
+        [technicalDescription],
+        [technicalName],
+        [version],
+        [qri],
+        [secureQri],
+        [sourceSystemId],
+        [type],
+        [__FK_resourceAttributes] AS [__KEY_data]
+    RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull([__FK_resourceAttributes])
+    and Match([usage] , 'ANALYTICS');
+    
+    Left Join (Temp_App)
+    LOAD	
+        [appFile],
+        [appMemory],
+        [__FK_resourceSize] AS [__KEY_data]
+    RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull([__FK_resourceSize]);
+    
+    Left Join (Temp_App)
+    LOAD	
+        [usedBy],
+        [__FK_itemViews] AS [__KEY_data]
+    RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull([__FK_itemViews]);
+    
+    TRACE 'Temp_App rows so far: ' & NoOfRows('Temp_App');
+    
+    Drop Table RestConnectorMasterTable;
+    
+Loop while Len(Trim('$(vURL)')) > 0;
+
+TRACE 'Loop completed. Total rows: ' & NoOfRows('Temp_App');
+
+MapOriginApp:
+Mapping load distinct id, name resident Temp_App;
+
+
+
+[Applications]:
+LOAD	distinct
+    [id] as appId,
+    [name] as [App Name],
+    [description] as [App Desc],
+   Today() - date(floor(lastReloadTime)) as [Days Since Last Reload], //DP 2-6-26 added to filter errors
+Timestamp( ConvertToLocalTime( Timestamp#(lastReloadTime, 'YYYY-MM-DDThh:mm:ss[.fff]Z'), 'America/New York'),'MMM DD YY hh:mm:ss') as [App Last Reload],
+//    lastReloadTime as apptempdate,
+   Timestamp( ConvertToLocalTime( Timestamp#(  [createdDate] , 'YYYY-MM-DDThh:mm:ss[.fff]Z'), 'America/New York'),'MMM DD YY hh:mm:ss')   as [App Created],  
+       Timestamp( ConvertToLocalTime( Timestamp#(  [modifiedDate]  , 'YYYY-MM-DDThh:mm:ss[.fff]Z'), 'America/New York'),'MMM DD YY hh:mm:ss')  as [App Modified],    
+//     [dynamicColor],
+//     [hasSectionAccess],
+    [isDirectQueryMode],
+    [_resourcetype],
+    [originAppId],
+    applymap('MapOriginApp',originAppId,'Not Published') as [Origin App Name],
+//     [owner]  as [App Owner],//dp replaced with below name 2-6-26
+    [ownerId]  as [App OwnerId],
+    applymap('Map_UserID_AppOwnerEmail',ownerId) as [App Owner Email],//dp 2-6-26
+    applymap('Map_UserID_AppOwnerName',ownerId) as [App Owner Name],//dp 2-6-26   
+//     [ownerId] as 'Users.id',
+  Timestamp( ConvertToLocalTime( Timestamp#(  [publishTime]  , 'YYYY-MM-DDThh:mm:ss[.fff]Z'), 'America/New York'),'MMM DD YY hh:mm:ss')  as [App Plubished Time],
+//     [published],
+SpaceID,//dp added
+// ApplyMap('Map_SpaceID_SpaceName',[spaceId],'Personal') as SpaceName,
+// ApplyMap('Map_SpaceID_SpaceType',[spaceId],'Personal') as SpaceType,
+//     [thumbnail],
+    [usage],
+//     [appId],
+    [appType]  as [App Type],
+//     [dataSetCount],
+//     [dataStoreName],
+//     [dataStoreType],
+    [reloadOnly],
+//     [technicalDescription],
+//     [technicalName],
+//     [version],
+//     [qri],
+//     [secureQri],
+//     [sourceSystemId],
+    [type]
+//     [appFile],
+//     [appMemory],
+//     [usedBy]
+RESIDENT Temp_App where len([lastReloadTime]) > 0;  
+
+
+STORE [Applications] INTO [lib://:DataFiles/Applications.qvd](qvd);
+
+Drop Table Temp_App;
+
+End sub
+///$tab sub AppPeakRam (test only)
+Sub AppPeakRam(vAppID)
+TRACE ***Getting Peak Reload RAM***;
+	SET vParams = 'limit=100';
+// AppMeta:
+// LOAD
+//     '' AS appId,
+//     '' AS [peak_memory_bytes]
+//     Autogenerate 0;
+Trace *****AppId for Metadata:  $(vAppID) *****;
+
+Set errorcode = 0;
+RestConnectorMasterTable:
+SQL SELECT 
+	"staticByteSize",
+	"__KEY_root",
+	(SELECT 
+		"cpu_time_spent_ms",
+		"peak_memory_bytes",
+		"fullReloadPeakMemoryBytes",
+		"partialReloadPeakMemoryBytes",
+		"__KEY_reloadMeta",
+		"__FK_reloadMeta"
+	FROM "reloadMeta" PK "__KEY_reloadMeta" FK "__FK_reloadMeta")
+FROM JSON (wrap on) "root" PK "__KEY_root"
+WITH CONNECTION ( URL "https://$(vu_tenant_fqdn)/api/v1/apps/$(vAppID)/data/metadata?$(vParams)");
+
+
+[AppMeta]:
+LOAD	
+'$(vAppID)' AS appId,
+//   [cpu_time_spent_ms],
+	[peak_memory_bytes]
+// 	[fullReloadPeakMemoryBytes],
+// 	[partialReloadPeakMemoryBytes]
+// // 	[__KEY_reloadMeta],
+// 	[__FK_reloadMeta] AS [__KEY_root]
+RESIDENT RestConnectorMasterTable
+WHERE NOT IsNull([__FK_reloadMeta]);
+
+
+DROP TABLE RestConnectorMasterTable;
+
+Endsub
+
+
+
+///$tab sub ReloadData
+Sub ReloadData(vAppID)
+TRACE ***Getting Reload Data***;
+//test only
+SET ErrorMode = 0; //to avoid failing due to apps with last reload beyond history.  Need to find out how long reloads are kept
+    /*
+get even failed reloads
+    Get only the max reload per app per day
+    Need associated appid to get app and space
+    Personal and failed reloads do not count on consumption so flag
+    */
+	SET vParams = 'limit=100';
+//     Do
+
+	RestConnectorMasterTable:
+    SQL SELECT 
+        "reloadId",
+        "success",
+        "duration" AS "duration_u0",
+        "endTime",
+        "loadDataFilesBytes",
+        "loadFilesBytes",
+        "loadExternalBytes",
+        "storeFilesBytes",
+        "storeDataFilesBytes",
+        "isPartialReload",
+        "skipStore",
+        "rowLimit",
+        "accessDbHash",
+        "appDbHash",
+        "storeHash",
+        "__KEY_data",
+        (SELECT 
+            "type",
+            "connectionId",
+            "connection",
+            "duration",
+            "dataSize",
+            "nbrOfFields",
+            "nbrOfRows",
+            "qri",
+            "label",
+            "tableName",
+            "partialReloadOperation",
+            "__FK_statements"
+        FROM "statements" FK "__FK_statements")
+    FROM JSON (wrap off) "data" PK "__KEY_data"
+    WITH CONNECTION ( URL "https://$(vu_tenant_fqdn)/api/v1/apps/$(vAppID)/reloads/metadata?$(vParams)");
+
+    [ReloadData]:
+    LOAD	
+    '$(vAppID)' AS appId,
+    '$(vAppID)' & '|' & num(monthend(endTime)) as MonthKeyTemp,//DP:4:50 Jan 26see if we can link reloads to this instead of appid, remove temp later
+    [reloadId] ,
+    [success],
+    [duration_u0] AS [duration_u0],
+    Timestamp(Timestamp#(endTime,'YYYY-MM-DD[T]hh:mm:ss.fff[Z]'),'YYYY-MM-DD hh:mm:ss') as endTime,
+    //Consumption report is based on UTC not customer local time 
+    date([endTime],'YYYY-MM-DD') as endDate,
+    [loadDataFilesBytes],
+    [loadExternalBytes] + [loadFilesBytes] as TotalBytes,
+    num(([loadExternalBytes] + [loadFilesBytes])/(1024*1024*1024),'0.000000')  as TotalBytes_GB,
+    [loadFilesBytes],
+    [loadExternalBytes] as [loadExternalBytes] ,
+    num([loadExternalBytes]/(1024*1024*1024) , '0.000000')as loadExternal_GB,
+    num([loadFilesBytes]/(1024*1024*1024) , '0.000000')as loadFilesBytes_GB,
+    [storeFilesBytes],
+    [storeDataFilesBytes],
+    [isPartialReload]
+RESIDENT RestConnectorMasterTable
+    WHERE NOT IsNull([__KEY_data]) ;
+
+     Drop Table RestConnectorMasterTable;
+
+IF NOT IsNull(qvdCreateTime('$(vReloadsQVDFileName)')) THEN
+  Concatenate(ReloadData)
+
+  Load distinct
+  * 
+  from [lib://:DataFiles/ReloadData.qvd](qvd) where not exists([reloadId])  ;//this does not work without the distinct, why?
+  Trace finished loading new ids;
+endif
+STORE [ReloadData] INTO [lib://:DataFiles/ReloadData.qvd](qvd);
+SET ErrorMode = 1; //turn error back on 
+End Sub
+
+///$tab sub loadReloadAppNew
+Sub loadReloadAppNew
+TRACE ***Passing AppID for reloads ***;
+LET NumRows = NoOfRows('Applications'); // Get the number of rows in the table DP: I removed these comments
+
+FOR i = 0 TO $(NumRows) - 1 // Loop from the first row (0) to the last row
+
+    LET vColumn1_Value = TEXT(Peek('appId', $(i), 'Applications')); // Get value from Column1
+    LET vColumn2_Value = TEXT(Peek('App Name', $(i), 'Applications')); // Get value from Column2
+
+    Trace DEBUG: row $(i) $(vColumn1_Value), '$(vColumn2_Value)'; // Example action: trace the values
+	
+    call ReloadData('$(vColumn1_Value)')
+//      call AppPeakRam('$(vColumn1_Value)') //new added 2-2-26
+    Sleep 5;
+
+NEXT i;
+
+End Sub
+trace end of sub call;
+///$tab Call Procedures
+Let Load_Time = Now(1);
+Trace Start - Loading Inventory processing on $(vu_tenant_fqdn);
+Let Msg='Loading Time  $(Load_Time)';
+Trace $(Msg);
+
+LIB CONNECT TO '$(vRestPaginationConnector)';
+
+Trace  $(VloadMode) ;
+Call get_users; 
+Call get_spaces;
+Call Exe_sub('loadApplications')
+Call loadDataFiles;
+
+Sleep 10;
+
+Call Exe_sub('loadReloadAppNew')
+
+Let load_end = Now(1);
+Let load_duration = Num(Ceil((load_end-Load_Time)*86400),'#,##0');
+Let load_msg = 'The loading was completed at $(load_end), Time:$(load_duration) seconds.';
+Trace $(load_msg);
+///$tab Summary
+//aggr by day to get max reload per day
+Round1:
+LOAD 
+  appId,
+  appId & '|' & num(monthend(max(endTime))) as MonthKeyTemp,//link to associated reload details
+  count(reloadId) as [# Reloads] ,
+  max(endTime) as [Last Reload Time], 
+  date(floor(max(endTime))) as [Last Reload Date], 
+  MonthEnd(max(endTime)) as MonthEnd,
+  max(loadExternalBytes) as MaxBytes,
+  max(loadExternal_GB) as MaxGB,
+  max(loadFilesBytes) as MaxFileBytes,
+  max(loadFilesBytes_GB) as MaxFileBytes_GB,
+  max(TotalBytes) as MaxTotalBytes,
+  max(TotalBytes_GB) as MaxTotalBytes_GB,
+  FirstSortedValue(loadExternalBytes, -endTime) AS [Last Reload Bytes],
+  FirstSortedValue(loadExternal_GB, -endTime) AS [Last Reload GB],
+  FirstSortedValue(loadFilesBytes, -endTime) AS [Last File Bytes],
+  FirstSortedValue(loadFilesBytes_GB, -endTime) AS [Last File GB],
+  FirstSortedValue(TotalBytes, -endTime) AS [Total Bytes],
+  FirstSortedValue(TotalBytes_GB, -endTime) AS [Total GB]
+ resident ReloadData  where success = 'True' group by appId, Date(floor((endTime))) order by endTime desc;
+ 
+ NoConcatenate
+ //aggr by month to get max and last reload per month
+Round2:
+Load
+    appId,
+    MonthKeyTemp,
+    MonthEnd,
+    sum([# Reloads]) as  [# Reloads],    
+    Timestamp( Max([Last Reload Time]),'MMM DD YY hh:mm:ss') as [Last Reload Time], 
+    max([Last Reload Date]) as [Last Reload Date], 
+    max(MaxBytes) as MaxBytes,
+    max(MaxGB) as MaxGB,
+    max(MaxFileBytes) as MaxFileBytes,
+    max(MaxFileBytes_GB) as MaxFileBytes_GB,
+    max(MaxTotalBytes) as MaxTotalBytes,
+    max(MaxTotalBytes_GB) as MaxTotalBytes_GB,
+//     max([Last Reload GB]) as [Last Reload GB],
+    FirstSortedValue(MaxBytes, -[Last Reload Time]) AS [Last Reload Bytes] ,//consider renameing to external
+    FirstSortedValue(MaxGB, -[Last Reload Time]) AS [Last Reload GB] ,//consider renameing to external
+    FirstSortedValue(MaxFileBytes, -[Last Reload Time]) AS [Last File Bytes] ,
+    FirstSortedValue(MaxFileBytes_GB, -[Last Reload Time]) AS [Last File GB] ,
+    FirstSortedValue(MaxTotalBytes, -[Last Reload Time]) AS [Last Total Bytes] ,
+    FirstSortedValue(MaxTotalBytes_GB, -[Last Reload Time]) AS [Last Total GB]     
+ resident Round1  group by appId, MonthKeyTemp, MonthEnd order by [Last Reload Time] desc;
+ 
+ drop table Round1;
+ 
+//Add columns for capacity consumption based on prior month or max of current month to date whichever is greater
+MonthlySummary_Ranked:
+//preceeding load to get current months usage based on prior months last reload value
+Load MonthKeyTemp, MonthEnd,
+    [Last Reload Date], MaxBytes, [Last Reload Bytes],
+    PriorMonthReloadBytes,PriorReloadDate,MaxGB, [Last Reload GB],MaxFileBytes_GB,MaxFileBytes,PriorMonthFileBytes,PriorMonthFileBytes_GB,
+    MaxTotalBytes, MaxTotalBytes_GB,PriorMonthTotalBytes,PriorMonthTotalBytes_GB,[Last File Bytes] ,[Last File GB],[Last Total Bytes] ,[Last Total GB] ,
+    timestamp([Last Reload Time] ,'MMM DD YY hh:mm:ss') as [Last Reload Time], 
+    if(PriorMonthReloadBytes > MaxBytes,'Prior Month Last Reload','In-Month Max Reload') as MaxConsumptionDesc,
+    if(PriorMonthReloadBytes > MaxBytes,PriorMonthReloadBytes,MaxBytes) as MaxConsumption,
+    if(PriorMonthReloadBytes > MaxBytes,PriorMonthReloadBytes_GB,MaxGB) as MaxConsumption_GB,
+    if(PriorMonthFileBytes > MaxFileBytes,PriorMonthFileBytes,MaxFileBytes) as MaxConsumptionFiles,//this should be comparing the sum of both files and externalbytes?
+    if(PriorMonthFileBytes > MaxFileBytes,PriorMonthFileBytes_GB,MaxFileBytes_GB) as MaxConsumptionFiles_GB,
+    if(PriorMonthFileBytes > MaxTotalBytes,PriorMonthTotalBytes,MaxTotalBytes) as MaxConsumptionTotal,
+    if(PriorMonthTotalBytes > MaxTotalBytes,PriorMonthTotalBytes_GB,MaxTotalBytes_GB) as MaxConsumptionTotal_GB,//this should be comparing the sum of both files and externalbytes?
+    Window(RecNo(),appId, 'DESC', MonthEnd ) as MonthRank
+// where Window(RecNo(),appId, 'DESC', MonthEnd ) < 3
+;
+LOAD 
+    *,
+    if(Previous(appId)=appId,date(floor(previous([Last Reload Date]))),date(floor([Last Reload Date]))) as PriorReloadDate,
+    if(Previous(appId)=appId,previous([Last Reload Bytes]),[Last Reload Bytes]) as PriorMonthReloadBytes,
+    if(Previous(appId)=appId,previous([Last Reload GB]),[Last Reload GB]) as PriorMonthReloadBytes_GB,
+    if(Previous(appId)=appId,previous(MaxFileBytes),MaxFileBytes) as PriorMonthFileBytes,
+    if(Previous(appId)=appId,previous(MaxFileBytes_GB),MaxFileBytes_GB) as PriorMonthFileBytes_GB,
+    if(Previous(appId)=appId,previous(MaxTotalBytes),MaxTotalBytes) as PriorMonthTotalBytes,
+    if(Previous(appId)=appId,previous(MaxTotalBytes_GB),MaxTotalBytes_GB) as PriorMonthTotalBytes_GB
+    
+RESIDENT Round2 ORDER BY appId, MonthEnd asc;
+
+DROP TABLE Round2;
+
+
+///$tab exit
+exit script;
